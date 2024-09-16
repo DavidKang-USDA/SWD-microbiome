@@ -1,3 +1,8 @@
+################################################################################################################################################
+################################################        PREPROCESSING SAMPLES WITH DADA2         ############################################################
+################################################################################################################################################
+
+
 # Install and load necessary Bioconductor packages
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
@@ -42,6 +47,11 @@ library(lme4)         # Linear mixed-effects models
 library(MASS)         # Applied statistics functions
 library(car)          # Regression analysis
 library(emmeans)      # Estimated marginal means
+library(dplyr)        # Offers a set of tools for data manipulation
+library(tibble)       # Used for creating and working with tibbles, a modern reimagining of data frames
+library(Biostrings)   # Provides tools for handling biological sequences (e.g., DNA, RNA, proteins)
+
+
 
 # Set working directory and define paths
 setwd("~/Corvallis")
@@ -200,4 +210,108 @@ head(taxa.print2)
 
 # Save the taxonomic assignment results to an RDS file
 saveRDS(taxa2, "~/Corvallis/16Scorvallis_taxo2.rds")
+
+######################################################################################################################################################################################################
+######################################################################################################################################################################################################
+      # Lets start with phyloseq to create a phyloseq object combining all the metadata and taxonomic information
+######################################################################################################################################################################################################
+######################################################################################################################################################################################################
+
+# Import metadata from CSV file
+sdata <- read.csv("C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/corvallis_metadata.csv",
+                   row.names = 1, header = TRUE, sep = ",", check.names = TRUE, stringsAsFactors = TRUE)
+head(sdata)
+
+# Filter metadata to include only specific crops and prepare for merging with sequencing data
+sdata2 <- sdata %>% 
+    rownames_to_column(var = "SampleID") %>%
+    filter(Crop %in% c("Blueberry", "Elderberry", "Blackberry")) %>%
+    as_tibble()
+
+head(sdata2)
+
+# Convert SampleID to rownames for further processing
+sdata3 <- sdata2 %>%
+    column_to_rownames(var = "SampleID")
+
+head(sdata3)
+
+# Create phyloseq object by merging metadata with sequencing data
+# Uncomment and modify the following lines if needed for your analysis
+# sam.new <- sample_data(sdata3)
+# d16S_4 <- merge_phyloseq(d16S_3, sam.new)
+
+# Read and prepare the phyloseq object with taxonomy and ASV data
+samdata <- sample_data(sdata3)
+tax16S <- readRDS("16Scorvallis_taxo2.rds")
+asv16S <- readRDS("seqtab_final.rds")
+phyloseq_object_all <- phyloseq(
+    otu_table(asv16S, taxa_are_rows = FALSE),
+    tax_table(tax16S),
+    sample_data(samdata)
+)
+
+# Filter ASVs based on taxonomy to exclude certain categories
+ps16S_3 <- subset_taxa(phyloseq_object_all, 
+                       !is.na(domain) & 
+                       !order %in% c("Chloroplast") & 
+                       !family %in% c("Mitochondria") &
+                       !genus %in% c("Wolbachia"))
+
+# Rename ASVs to ensure unique identifiers
+dna.16S <- Biostrings::DNAStringSet(taxa_names(ps16S_3))
+names(dna.16S) <- taxa_names(ps16S_3)
+ps16S_4 <- merge_phyloseq(ps16S_3, dna.16S)
+taxa_names(ps16S_4) <- paste0("ASV", seq(ntaxa(ps16S_4)))
+
+# Filter samples and taxa based on abundance criteria
+ps16S_5 <- prune_samples(sample_sums(ps16S_4) >= 1000, ps16S_4)
+ps16S_6 <- filter_taxa(ps16S_5, function(x) sum(x) > 0, TRUE)
+
+# Alternatively, prune taxa based on a relative abundance threshold
+total.depth <- sum(otu_table(ps16S_4))
+threshold <- 5e-5 * total.depth
+ps16S_5 <- prune_taxa(taxa_sums(ps16S_4) > threshold, ps16S_4)
+
+# Count unique families and genera in the filtered data
+tax_table <- tax_table(ps16S_5)
+families <- tax_table[, "family"]
+genera <- tax_table[, "genus"]
+
+num_families <- length(unique(families[!is.na(families)]))
+num_genera <- length(unique(genera[!is.na(genera)]))
+
+cat("Number of unique families:", num_families, "\n")
+cat("Number of unique genera:", num_genera, "\n")
+
+# Count unique genera
+unique_genera <- length(unique(tax_table[, "genus"]))
+print(paste("Number of unique genera:", unique_genera))
+
+# Sequence alignment and phylogenetic tree construction
+seqs.16S.nf <- refseq(ps16S_5)
+alignment.16S.nf <- AlignSeqs(DNAStringSet(seqs.16S.nf), anchor = NA)
+phang.align.16S.nf <- phyDat(as(alignment.16S.nf, "matrix"), type = "DNA")
+
+# Model test and phylogenetic tree construction
+mt.16S.nf <- modelTest(phang.align.16S.nf)
+dm.16S.nf <- dist.ml(phang.align.16S.nf)
+treeNJ.16S.nf <- NJ(dm.16S.nf)
+
+# Fit the tree using maximum likelihood and GTR model
+fit.16S.nf <- pml(treeNJ.16S.nf, data = phang.align.16S.nf)
+fit.GTR.16S.nf <- update(fit.16S.nf, k = 4, inv = 0.2)
+fit.GTR.16S.nf <- optim.pml(fit.GTR.16S.nf, model = "GTR", optInv = TRUE, optGamma = TRUE,
+                            rearrangement = "stochastic", control = pml.control(trace = 0))
+
+# Save the final phyloseq object with the constructed phylogenetic tree
+d16S.nf <- phyloseq(
+    tax_table(ps16S_5),
+    sample_data(ps16S_5),
+    otu_table(ps16S_5, taxa_are_rows = FALSE),
+    refseq(ps16S_5),
+    phy_tree(fit.GTR.16S.nf$tree)
+)
+saveRDS(d16S.nf, "16S.corvallis_PS.rds")
+
 
