@@ -44,8 +44,8 @@ library(car)          # Regression analysis
 library(emmeans)      # Estimated marginal means
 
 # Set working directory and define paths
-setwd("C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis")
-path <- "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/Raw_reads"
+setwd("~/Corvallis")
+path <- "~/Corvallis/Raw_reads"
 
 # List and sort file names
 fnFs <- sort(list.files(path, pattern="_1.fq.gz", full.names = TRUE))
@@ -63,8 +63,8 @@ ggsave("qualplot_Rev_WT.pdf", plot.quals, device="pdf")
 read.fastq(fnFs[3])
 
 # Define file paths for filtered sequences
-filtpathF <- "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/Raw_reads"
-filtpathR <- "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/Raw_reads"
+filtpathF <- "~/Corvallis/Raw_reads"
+filtpathR <- "~/Corvallis/Raw_reads"
 filtFs <- list.files(filtpathF, pattern="_1.fq.gz", full.names = TRUE)
 filtRs <- list.files(filtpathR, pattern="_2.fq.gz", full.names = TRUE)
 sample.names <- sapply(strsplit(basename(filtFs), "_"), `[`, 1)
@@ -79,7 +79,7 @@ names(filtRs) <- sample.names
 set.seed(100)
 
 # Define paths for filtered sequences
-pathfiltered <- "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/"
+pathfiltered <- "~/Corvallis/"
 filtFs <- file.path(pathfiltered, "filtered", paste0(sample.names, "_F_filt.fastq.gz"))
 filtRs <- file.path(pathfiltered, "filtered", paste0(sample.names, "_R_filt.fastq.gz"))
 names(filtFs) <- sample.names
@@ -118,7 +118,7 @@ dim(seqtab)
 table(nchar(getSequences(seqtab)))
 
 # Save sequence table
-saveRDS(seqtab, file = "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/seqtab.rds")
+saveRDS(seqtab, file = "~/Corvallis/seqtab.rds")
 
 # Remove chimeras
 seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=TRUE)
@@ -133,15 +133,15 @@ rownames(track) <- sample.names
 head(track)
 
 # Assign taxonomy
-taxa <- assignTaxonomy(seqtab.nochim, "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/silva_nr99_v138.1_train_set.fa.gz", multithread=TRUE)
-taxa <- addSpecies(taxa, "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/silva_species_assignment_v138.1.fa.gz")
+taxa <- assignTaxonomy(seqtab.nochim, "~/Corvallis/silva_nr99_v138.1_train_set.fa.gz", multithread=TRUE)
+taxa <- addSpecies(taxa, "~/Corvallis/silva_species_assignment_v138.1.fa.gz")
 taxa.print <- taxa
 rownames(taxa.print) <- NULL
 head(taxa.print)
 
 # Save final results
-saveRDS(seqtab.nochim, file = "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/seqtab_final.rds")
-saveRDS(taxa, file = "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/tax_final.rds")
+saveRDS(seqtab.nochim, file = "~/Corvallis/seqtab_final.rds")
+saveRDS(taxa, file = "~/Corvallis/tax_final.rds")
 
 # Generate FASTA and TSV files for ASVs
 asv_seqs <- colnames(seqtab.nochim)
@@ -163,13 +163,13 @@ write.table(asv_tax, "ASVs_taxonomy.tsv", sep="\t", quote=F, col.names=NA)
 
 # Taxonomic assignment using an external training set
 # Load the sequence table and training data
-seqtab <- readRDS("C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/seqtab_final.rds")
+seqtab <- readRDS("~/Corvallis/seqtab_final.rds")
 
 # Convert sequences from sequence table to DNAStringSet
 dna <- DNAStringSet(getSequences(seqtab))
 
 # Load the training set for taxonomic assignment
-load("C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/SILVA_SSU_r138_2019.RData") # CHANGE TO THE PATH OF YOUR TRAINING SET
+load("~/Corvallis/SILVA_SSU_r138_2019.RData") # CHANGE TO THE PATH OF YOUR TRAINING SET
 
 # Perform taxonomic assignment
 ids <- IdTaxa(dna, trainingSet, strand="top", processors=NULL, verbose=FALSE) # Use all processors for faster processing
@@ -199,5 +199,5 @@ rownames(taxa.print2) <- NULL
 head(taxa.print2)
 
 # Save the taxonomic assignment results to an RDS file
-saveRDS(taxa2, "C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/16Scorvallis_taxo2.rds")
+saveRDS(taxa2, "~/Corvallis/16Scorvallis_taxo2.rds")
 
