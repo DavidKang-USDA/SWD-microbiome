@@ -1,4 +1,4 @@
-# Impacts of host crop and fly sex on the Drosophila suzukii microbiome 
+# Impacts of host crop and fly sex on the *Drosophila suzukii* microbiome 
 
 This repository provides supporting information and the codes for the following manuscript.
 
