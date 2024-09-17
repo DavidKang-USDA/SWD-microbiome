@@ -41,7 +41,6 @@ Description of R scripts
 Preprocessing - run this script first since it generates input data for the rest of the scirpts
 Diversity - general microbial diversity statistics
 Network- generating and plotting networks.
-.
 └── SpermosphereMicrobiome2022
     ├── Bacteria
     │   ├── 16s_taxonomy.csv
