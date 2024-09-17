@@ -36,9 +36,12 @@ Special thanks to Rebecca Schmidt for her efforts in “sample mailing coordinat
 
 ## Description of R scripts
 
-[Preprocessing](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Preprocessing.R) - This script is for preprocessing of the raw sequencing reads using [DADA2](https://benjjneb.github.io/dada2/). The script is used for generating statistics, filtering and trimming, dereplication, clustering, chimera removal, taxonomy assignment and getting a phyloseq object for downstream analysis. The output from this step is the input for subsequent steps.
+1. [Preprocessing](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Preprocessing.R) - This script is for preprocessing of the raw sequencing reads using [DADA2](https://benjjneb.github.io/dada2/). The script is used for generating statistics, filtering and trimming, dereplication, clustering, chimera removal, taxonomy assignment and getting a phyloseq object for downstream analysis. The output from this step is the input for subsequent steps.
 
+2. [Diversity](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Diversity%20analysis.R) - This script is to understand the general microbial diversity (alpha, beta and abundance) and their associated statistics
 
-[Diversity](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Diversity%20analysis.R) - general microbial diversity (alpha, beta and abundance) and statistics
-[Network](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Co-occurence%20network.R)- generating and plotting networks and comparing netwrok between male and female flies
-[Differential abundance and Core microbiome ](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Differential%20abundance%2C%20core%2C%20cooccurence%2C%20%20and%20upset%20plot.R)- differentially abundant taxa across various treatments and core microbial communiites in SWD
+3. [Differential abundance and Core microbiome ](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Differential%20abundance%2C%20core%2C%20cooccurence%2C%20%20and%20upset%20plot.R)- This script helps to understand differentially abundant taxa across various treatments and core microbial communiites in SWD. It also has script for conducting co-occurence pattern across the core taxa. 
+
+4. [Network](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Co-occurence%20network.R)- This script is for generating and plotting microbial co-occurence network in spotted wing Drosophila and comparing netwrok between male and female flies and their associated statistics.
+
+   ###_Note: The statistics for network comparision requires huge memory and cores. So it is recommended to run this analysis in HPC. _
