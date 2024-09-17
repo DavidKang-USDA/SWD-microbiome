@@ -47,4 +47,4 @@ Special thanks to Rebecca Schmidt for her efforts in “sample mailing coordinat
 
 4. [Network](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Co-occurence%20network.R)- This script is for generating and plotting microbial co-occurence network in spotted wing Drosophila and comparing netwrok between male and female flies and their associated statistics.
 
-   ###*Note: The statistics for network comparision requires huge memory and cores. So it is recommended to run this analysis in HPC.*
+   ### *Note: The statistics for network comparision requires huge memory and cores. So it is recommended to run this analysis in HPC.*
