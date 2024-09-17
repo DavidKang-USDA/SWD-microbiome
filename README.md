@@ -4,7 +4,7 @@ This repository provides supporting information and the codes for the following 
 
 ## Exploring the Impact of Host Crop and Sex on the Microbiome of Spotted Wing Drosophila: Core Communities and Co-occurrence Dynamics
 
-Rishi Bhandari<sup>1</sup>, Adam Wong, Jana Lee,Alex Boyd<sup>*1</sup>, Laurie Agosto<sup>1</sup>, Kent Shelby <sup>1</sup>, Joseph Ringbauer Jr<sup>1</sup>, and David S. Kang Potnis<sup>1</sup>
+Rishi Bhandari<sup>1</sup>, Adam Wong, Jana Lee,Alex Boyd<sup>*1</sup>, Laurie Agosto<sup>1</sup>, Kent Shelby <sup>1</sup>, Joseph Ringbauer Jr<sup>1</sup>, and David S. Kang <sup>1</sup>
 
 
 <sup>1</sup> USDA Agricultural Research Service, Biological Control of Insects Research Laboratory, Research Park, 1503 S Providence, Columbia, MO 65203-3535, USA
