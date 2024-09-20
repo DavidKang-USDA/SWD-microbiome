@@ -15,7 +15,7 @@ Rishi Bhandari<sup>1</sup>, Adam Wong<sup>2</sup>, Jana Lee<sup>3</sup>, Alex Bo
 <sup>3</sup> Horticultural Crops Disease and Pest Management Research Unit, United States Department of Agriculture, Agriculture Research Service, Corvallis, OR 97330, USA <br />
  <br />
  <br />       
-  <br />  
+
 Short title: Impacts of host crop and fly sex on the Drosophila suzukii microbiome
 
 Corresponding Author: Dave Kang, Dave.Kang@usda.gov
@@ -23,7 +23,7 @@ Corresponding Author: Dave Kang, Dave.Kang@usda.gov
 
 
     
-   ### *Note: This study is currently under review.*
+   ### *Note: This study is currently under review.*   <br />  
 
 
 
