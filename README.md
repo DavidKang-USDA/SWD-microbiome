@@ -35,16 +35,9 @@ Corresponding Author: Dave Kang, Dave.Kang@usda.gov
 
    #### *Note: The statistics for network comparision requires huge memory and cores. So it is recommended to run this analysis in HPC.*
 
-## Data Availability
-
-Sequence data generated from this work have been deposited in the SRA (Sequencing Read Achieve) database under the BioProject accessions number PRJNA1149766. 
-
-
-## Acknowledgements
-Special thanks to Rebecca Schmidt for her efforts in “sample mailing coordination.” This research used resources provided by the SCINet project and/or the AI Center of Excellence of the USDA Agricultural Research Service, ARS project numbers 0201-88888-003-000D and 0201-88888-002-000D.
 
 ```
-📦 
+
 ├─ README.md
 ├─ R Scripts
 │  ├─ Co-occurence network.R
@@ -85,5 +78,12 @@ Special thanks to Rebecca Schmidt for her efforts in “sample mailing coordinat
       ├─ Table S5.xlsx
       └─ Table S6.xlsx
 ```
+## Data Availability
+
+Sequence data generated from this work have been deposited in the SRA (Sequencing Read Achieve) database under the BioProject accessions number PRJNA1149766. 
+
+
+## Acknowledgements
+Special thanks to Rebecca Schmidt for her efforts in “sample mailing coordination.” This research used resources provided by the SCINet project and/or the AI Center of Excellence of the USDA Agricultural Research Service, ARS project numbers 0201-88888-003-000D and 0201-88888-002-000D.
 
 
