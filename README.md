@@ -24,8 +24,7 @@ Corresponding Author: Dave Kang, Dave.Kang@usda.gov
 
     
    ### *Note: This study is currently under review.*   <br />  
-
-
+  <br />  
 
 ## Description of R scripts
 
