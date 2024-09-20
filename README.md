@@ -89,4 +89,5 @@ Sequence data generated from this work have been deposited in the SRA (Sequencin
 ## Acknowledgements
 Special thanks to Rebecca Schmidt for her efforts in “sample mailing coordination.” This research used resources provided by the SCINet project and/or the AI Center of Excellence of the USDA Agricultural Research Service, ARS project numbers 0201-88888-003-000D and 0201-88888-002-000D.
 
-
+## Funding
+Rishi Bhandari was supported by a postdoctoral fellowship funded by the USDA Agricultural Research Service's SCINet Program and AI Center of Excellence, ARS project numbers 0201-88888-003-000D and 0201-88888-002-000D, and administered by the Oak Ridge Institute for Science and Education (ORISE) through an interagency agreement between the U.S. Department of Energy (DOE) and the U.S. Department of Agriculture (USDA). ORISE is managed by ORAU under DOE contract number DESC0014664. All opinions expressed in this paper are the authors and do not necessarily reflect the policies and views of the USDA, DOE, or ORAU/ORISE.
