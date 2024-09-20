@@ -1,8 +1,9 @@
 # Impacts of host crop and fly sex on the *Drosophila suzukii* microbiome 
 
 This repository provides supporting information and the codes for the following manuscript.
-< br/>
-< br / >
+
+
+    
 ## Exploring the Impact of Host Crop and Sex on the Microbiome of Spotted Wing Drosophila: Core Communities and Co-occurrence Dynamics
 
 Rishi Bhandari<sup>1</sup>, Adam Wong<sup>2</sup>, Jana Lee<sup>3</sup>, Alex Boyd<sup>*1</sup>, Laurie Agosto<sup>1</sup>, Kent Shelby <sup>1</sup>, Joseph Ringbauer Jr<sup>1</sup>, David S. Kang <sup>1</sup>
