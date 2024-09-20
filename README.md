@@ -73,7 +73,6 @@ Corresponding Author: Dave Kang, Dave.Kang@usda.gov
 │     └─ Fig. S4.pdf
 └─ Table
    └─ Supplementary tables
-      ├─ ...
       ├─ Table S1.xlsx
       ├─ Table S2.xlsx
       ├─ Table S3.xlsx
