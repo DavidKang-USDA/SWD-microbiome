@@ -82,7 +82,7 @@ Corresponding Author: Dave Kang, Dave.Kang@usda.gov
 ```
 ## Data Availability
 
-Sequence data generated from this work have been deposited in the SRA (Sequencing Read Achieve) database under the BioProject accessions number PRJNA1149766. 
+Sequence data generated from this work have been deposited in the SRA (Sequencing Read Achieve) database under the BioProject accessions number [PRJNA1149766](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1149766). 
 
 
 ## Acknowledgements
