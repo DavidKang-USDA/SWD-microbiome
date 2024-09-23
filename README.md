@@ -21,8 +21,6 @@ Short title: Impacts of host crop and fly sex on the Drosophila suzukii microbio
 Corresponding Author: Dave Kang, Dave.Kang@usda.gov
 
 
-![KangLab_poster](https://github.com/user-attachments/assets/c6e821b2-2d29-4d0e-82d6-8074b798f4a4)
-
 
     
    ### *Note: This study is currently under review.*   <br />  
