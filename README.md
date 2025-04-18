@@ -1,6 +1,6 @@
 # Impacts of host crop and fly sex on the *Drosophila suzukii* microbiome 
 
-This repository provides supporting information and the codes for the following manuscript. <br />
+This repository provides supporting information and the code for the following manuscript. <br />
  <br />
 
 ## Exploring the Impact of Host Crop and Sex on the Microbiome of Spotted Wing Drosophila: Core Communities and Co-occurrence Dynamics
@@ -28,15 +28,15 @@ Corresponding Author: Dave Kang, Dave.Kang@usda.gov
 
 ## Description of R scripts
 
-1. [Preprocessing](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Preprocessing.R) - This script is for preprocessing of the raw sequencing reads using [DADA2](https://benjjneb.github.io/dada2/). The script is used for generating statistics, filtering and trimming, dereplication, clustering, chimera removal, taxonomy assignment and getting a phyloseq object for downstream analysis. The output from this step is the input for subsequent steps.
+1. [Preprocessing](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Preprocessing.R)—This script preprocesses the raw sequencing reads using [DADA2](https://benjjneb.github.io/dada2/). The script generates statistics, filters and trims, dereplication, clustering, chimera removal, assigns taxonomy, and gets a phyloseq object for downstream analysis. The output from this step is the input for subsequent steps.
 
-2. [Diversity](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Diversity%20analysis.R) - This script is to understand the general microbial diversity (alpha, beta and abundance) and their associated statistics
+2. [Diversity](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Diversity%20analysis.R) - This script is to understand the general microbial diversity (alpha, beta, and abundance) and their associated statistics
 
-3. [Differential abundance and Core microbiome ](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Differential%20abundance%2C%20core%2C%20cooccurence%2C%20%20and%20upset%20plot.R)- This script helps to understand differentially abundant taxa across various treatments and core microbial communiites in SWD. It also has script for conducting co-occurence pattern across the core taxa. 
+3. [Differential abundance and Core microbiome ](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Differential%20abundance%2C%20core%2C%20cooccurence%2C%20%20and%20upset%20plot.R)- This script helps to understand differentially abundant taxa across various treatments and core microbial communities in SWD. It also has a script for conducting co-occurrence patterns across the core taxa. 
 
-4. [Network](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Co-occurence%20network.R)- This script is for generating and plotting microbial co-occurence network in spotted wing Drosophila and comparing netwrok between male and female flies and their associated statistics.
+4. [Network](https://github.com/DavidKang-USDA/SWD-microbiome/blob/main/R%20Scripts/Co-occurence%20network.R)- This script is for generating and plotting microbial co-occurrence networks in spotted wing Drosophila and comparing networks between male and female flies and their associated statistics.
 
-   #### *Note: The statistics for network comparision requires huge memory and cores. So it is recommended to run this analysis in HPC.*
+   #### *Note: The statistics for network comparison require huge memory and cores. So it is recommended to run this analysis in HPC.*
 
 
 ```
@@ -82,7 +82,7 @@ Corresponding Author: Dave Kang, Dave.Kang@usda.gov
 ```
 ## Data Availability
 
-Sequence data generated from this work have been deposited in the SRA (Sequencing Read Achieve) database under the BioProject accessions number [PRJNA1149766](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1149766). 
+Sequence data generated from this work have been deposited in the SRA (Sequencing Read Archive) database under the BioProject accessions number PRJNA1246986PRJNA114976(https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1149766). 
 
 
 ## Acknowledgements
