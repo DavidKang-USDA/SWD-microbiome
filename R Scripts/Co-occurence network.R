@@ -11,8 +11,7 @@ library(NetCoMi)
 library(staRank)
 
 # Load and preprocess the phyloseq object (use non normalized reads as netcomi has its own normalization)
-d16S <- readRDS("C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/16S.corvallis_PS.rds")
-d16S <- subset_samples(d16S, ID != "COMOF12")
+d16S <- readRDS("./16S.corvallis_PS.rds")
 
 # Agglomerate to genus level
 corvallis_genus <- tax_glom(d16S, taxrank = "genus")
