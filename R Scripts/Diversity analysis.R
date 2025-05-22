@@ -47,6 +47,31 @@ read.depths <- sample_sums(d16S)
 hist(read.depths, breaks = 20)
 summary(read.depths)
 
+
+
+# Normalize based on cumulative sum scaling
+library(metagenomeSeq)
+MGS <- phyloseq_to_metagenomeSeq(d16S)
+p <- metagenomeSeq::cumNormStatFast(MGS)
+MGS <- metagenomeSeq::cumNorm(MGS, p =p)
+metagenomeSeq::normFactors(MGS) # exports the normalized factors for each sample
+norm.bacteria <- metagenomeSeq::MRcounts(MGS, norm = T)
+norm.bacteria.OTU <- phyloseq::otu_table(norm.bacteria, taxa_are_rows = TRUE)
+
+bacteria.css.norm <- phyloseq::phyloseq(norm.bacteria.OTU, phyloseq::tax_table(d16S), phyloseq::refseq(d16S), phyloseq::phy_tree(d16S), phyloseq::sample_data(d16S))
+
+#Final reads
+sum(taxa_sums(bacteria.css.norm)) 
+#Final total for bacteria - 3768324 reads across samples
+mean(sample_sums(bacteria.css.norm)) # 60779
+median(sample_sums(bacteria.css.norm)) # 47424
+saveRDS(bacteria.css.norm, "bacteria.css.norm.rds")
+count_data <- as.data.frame(otu_table(bacteria.css.norm))
+taxonomy_data <- as.data.frame(phyloseq::tax_table(bacteria.css.norm))
+write.csv(count_data, "bacteriacount_data.csv", row.names = TRUE)
+write.csv(taxonomy_data, "bacteriataxa_data.csv", row.names = TRUE)
+
+
 # Rarefaction Curves
 # Create rarefaction curves and add a line indicating the minimum sample size
 ggrare(d16S, step = 10, color = "Treatment", se = FALSE) +
@@ -71,7 +96,7 @@ p0 + facet_wrap(~Location, ncol = 4)
 
 # Transform abundance counts to proportions
 count_to_prop <- function(x) { return(100 * x / sum(x)) }
-d16S_4.trans <- transform_sample_counts(physeq_rar, count_to_prop)
+d16S_4.trans <- transform_sample_counts(d16S, count_to_prop)
 sample_sums(d16S_4.trans)[1:5]
 
 # Plot alpha diversity measures (Simpson and Shannon)
@@ -81,11 +106,11 @@ p_alpha <- plot_richness(d16S_4.trans, x = "Treatment", measures = c("Simpson", 
 
 p_alpha
 
-# Table of alpha-diversity estimators
-table_r16S <- estimate_richness(physeq_rar, split = TRUE, measures = c("Observed", "InvSimpson", "Shannon", "Chao"))
+# Table of alpha-diversity estimators 
+table_r16S <- estimate_richness(d16S, split = TRUE, measures = c("Observed", "InvSimpson", "Shannon", "Chao"))
 
 # Combine alpha diversity table with sample metadata
-sdr16S <- sample_data(physeq_rar)
+sdr16S <- sample_data(d16S)
 datar16S <- cbind(sample_data(sdr16S), table_r16S) 
 write.csv(datar16S, "datar16S-alphadiv.csv")
 
@@ -133,25 +158,50 @@ ggarrange(A1, A2, labels = c("A", "B"), ncol = 2, nrow = 1)
 ggsave("Alpha.pdf", width = 12, height = 4.5, units = "in", dpi = 700)
 
 # Statistical Tests on Alpha Diversity
-# Kruskal-Wallis test for Shannon diversity
-datar16S$CropSex <- with(datar16S, interaction(Crop, Sex))
-shannonkruskal <- kruskal.test(Shannon ~ CropSex, data = datar16S)
-summary(shannonkruskal)
+# linear mixed model using lme4 package
+# Shannon
+model_shannon <- lmer(Shannon ~  Treatment +(1 | Location), data = datar16S)
 
-# Pairwise comparisons for Shannon diversity
-PT <- pairwise.wilcox.test(datar16S$Shannon, datar16S$CropSex, p.adjust.method = "fdr")
-PT1 <- fullPTable(PT$p.value)
-write.csv(PT1, "ShannonLocationSexCrop.csv")
+# Chao1
+model_chao1 <- lmer(Chao1 ~ Crop + Sex + (1 | Location), data = datar16S)
 
-# Kruskal-Wallis test for Chao1 diversity
-datar16S$LocationSex <- with(datar16S, interaction(Location, Sex, Crop))
-Chao1kruskal <- kruskal.test(Shannon ~ LocationSex, data = datar16S)
-Chao1kruskal
+# Residual plots for Shannon
+par(mfrow = c(1, 2))
+plot(model_shannon)
+qqnorm(resid(model_shannon)); qqline(resid(model_shannon))
 
-# Pairwise comparisons for Chao1 diversity
-PT <- pairwise.wilcox.test(datar16S$Chao1, datar16S$LocationSex, p.adjust.method = "fdr")
-PT1 <- fullPTable(PT$p.value)
-write.csv(PT1, "ShannonLocationSexCrop.csv")
+# Residual plots for Chao1
+par(mfrow = c(1, 2))
+plot(model_chao1)
+qqnorm(resid(model_chao1)); qqline(resid(model_chao1))
+
+
+# Shannon - Crop
+emmeans_shannon_crop <- emmeans(model_shannon,  ~ Treatment)
+emmeans_shannon_sex  <- emmeans(model_shannon, pairwise ~ Sex)
+
+# Chao1 - Crop
+emmeans_chao1_crop <- emmeans(model_chao1, pairwise ~ Crop)
+emmeans_chao1_sex  <- emmeans(model_chao1, pairwise ~ Sex)
+
+# Plot for Crop (Shannon)
+plot(emmeans_shannon_crop, comparisons = TRUE) + ggtitle("Shannon Diversity by Crop")
+
+# Plot for Crop (Chao1)
+plot(emmeans_chao1_crop, comparisons = TRUE) + ggtitle("Chao1 Richness by Crop")
+
+
+# Summary table for fixed effects
+fixed_summary_shannon <- broom.mixed::tidy(model_shannon, effects = "fixed")
+fixed_summary_chao1   <- broom.mixed::tidy(model_chao1, effects = "fixed")
+
+
+# Crop comparisons for Shannon
+contrast_shannon_crop <- as.data.frame(emmeans_shannon_crop$contrasts)
+
+# Chao1 crop comparisons
+contrast_chao1_crop <- as.data.frame(emmeans_chao1_crop$contrasts)
+
 
 # Beta Diversity Analysis
 # PCoA Ordination
@@ -163,7 +213,7 @@ d16S_5.rare_pcoa <- ordinate(
 
 # Plot PCoA results
 B1 <- plot_ordination(
-  physeq = physeq_rar,
+  physeq = bacteria.css.norm,
   ordination = d16S_5.rare_pcoa,
   color = "TRT",
   shape = "Sex",
@@ -185,14 +235,14 @@ set.seed(1)
 
 # Ordinate
 d16S_5.rare_nmds <- ordinate(
-  physeq = physeq_rar, 
+  physeq = bacteria.css.norm, 
   method = "NMDS", 
   distance = "bray"
 )
 
 
 plot_ordination(
-  physeq = physeq_rar,
+  physeq = bacteria.css.norm,
   ordination = d16S_5.rare_nmds,
   color = "TRT",
   shape = "Sex",
@@ -285,7 +335,7 @@ genera_colors <- c(
 # Phylum-level plots
 
 # Agglomerate to phylum-level and rename taxa
-bacteria_phylum <- phyloseq::tax_glom(physeq_rar, "family")
+bacteria_phylum <- phyloseq::tax_glom(bacteria.css.norm, "family")
 phyloseq::taxa_names(bacteria_phylum) <- phyloseq::tax_table(bacteria_phylum)[, "family"]
 
 # Visualize the first few rows of the OTU table
@@ -321,7 +371,7 @@ write.csv(bacteria_phylum_melted, "bacterial_phylum.csv")
 # Genus-level plots
 
 # Agglomerate to genus-level and transform to relative abundance
-bacteria_genus <- phyloseq::tax_glom(physeq_rar, "family")
+bacteria_genus <- phyloseq::tax_glom(bacteria.css.norm, "family")
 ps_rel_abund <- phyloseq::transform_sample_counts(bacteria_genus, function(x) x / sum(x))
 
 # Get top 15 genera by abundance
