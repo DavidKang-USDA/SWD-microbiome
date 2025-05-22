@@ -218,7 +218,7 @@ saveRDS(taxa2, "~/Corvallis/16Scorvallis_taxo2.rds")
 ######################################################################################################################################################################################################
 
 # Import metadata from CSV file
-sdata <- read.csv("C:/Users/Rishi.Bhandari/OneDrive - USDA/Desktop/Corvallis/corvallis_metadata.csv",
+sdata <- read.csv("./corvallis_metadata.csv",
                    row.names = 1, header = TRUE, sep = ",", check.names = TRUE, stringsAsFactors = TRUE)
 head(sdata)
 
