@@ -9,7 +9,7 @@ library(magrittr) # for %>%
 library(dplyr)    # also loads %>%
 
 ## Convert the rarefied phyloseq object to a microeco object
-meco_dataset <- phyloseq2meco(physeq_rar)
+meco_dataset <- phyloseq2meco(bacteria.css.norm)
 print(meco_dataset)
 
 ## Create a trans_abund object and plot abundance data
@@ -58,7 +58,7 @@ library(microViz)
 # Load and preprocess the dataset (Here we are using the rerefied dataset)
 
 # Convert to relative abundance
-ps1.fly.rel <- microbiome::transform(physeq_rar, "compositional")
+ps1.fly.rel <- microbiome::transform(bacteria.css.norm, "compositional")
 print(ps1.fly.rel)
 
 # Prune taxa with zero abundance
