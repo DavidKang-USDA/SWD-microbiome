@@ -3,9 +3,9 @@
 This repository provides supporting information and the code for the following manuscript. <br />
  <br />
 
-## Exploring the Impact of Host Crop and Sex on the Microbiome of Spotted Wing Drosophila: Core Communities and Co-occurrence Dynamics
+## Microbiome composition and co-occurrence dynamics in wild *Drosophila suzukii* are influenced by host crop, fly sex, and sampling location 
 
-Rishi Bhandari<sup>1</sup>, Adam Wong<sup>2</sup>, Jana Lee<sup>3</sup>, Alex Boyd<sup>*1</sup>,  Kent Shelby <sup>1</sup>, Joseph Ringbauer Jr<sup>1</sup>, David S. Kang <sup>1</sup>  <br />
+Rishi Bhandari<sup>1</sup>, Adam Chun-Nin Wong<sup>2</sup>, Jana C. Lee<sup>3</sup>, Alex Boyd<sup>*1</sup>,  Kent Shelby <sup>1</sup>, Joseph Ringbauer Jr<sup>1</sup>, and David S. Kang <sup>1</sup>  <br />
  <br />
  <br />
 <sup>1</sup> Biological Control of Insects Research Laboratory, United States Department of Agriculture, Agriculture Research Service, Columbia, MO 65203, USA
@@ -18,7 +18,7 @@ Rishi Bhandari<sup>1</sup>, Adam Wong<sup>2</sup>, Jana Lee<sup>3</sup>, Alex Bo
 
 Short title: Impacts of host crop and fly sex on the Drosophila suzukii microbiome
 
-Corresponding Author: Dave Kang, Dave.Kang@usda.gov
+Corresponding Author: David S. Kang, Dave.Kang@usda.gov
 
 
 
@@ -70,7 +70,6 @@ Corresponding Author: Dave Kang, Dave.Kang@usda.gov
 │     ├─ Fig. S1.pdf
 │     ├─ Fig. S2.pdf
 │     ├─ Fig. S3.pdf
-│     └─ Fig. S4.pdf
 └─ Table
    └─ Supplementary tables
       ├─ Table S1.xlsx
